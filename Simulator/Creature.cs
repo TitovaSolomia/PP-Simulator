@@ -13,26 +13,54 @@ internal class Creature
 
     public string Name
     {
-        get { return name; }
-        set { name = value; }
+        get => name;
+        init
+        {
+            var checked_name = value.Trim();
+
+            if (checked_name.Length > 25)
+            {
+                checked_name = checked_name.Substring(0, 25).TrimEnd();
+            }
+
+            if (checked_name.Length < 3)
+            {
+                checked_name = checked_name.PadRight(3, '#');
+            }
+
+            if (char.IsLower(checked_name[0]))
+            {
+                checked_name = char.ToUpper(checked_name[0]) + checked_name.Substring(1);
+            }
+
+            name = checked_name;
+        }
     }
 
     public int Level
     {
-        get { return level; }
-        set { level = value; }
+        get => level;
+        init => level = value < 1 ? 1 : value > 10 ? 10 : value;
     }
 
-    public Creature() { }
-
-    public string Info
+    public Creature(string name, int level = 1)
     {
-        get { return $"{Name} [{Level}]"; }
+        Name = name;
+        Level = level;
     }
+
+    public string Info => $"{Name} [{Level}]";
 
     public void SayHi()
     {
         Console.WriteLine($"My name is {Name}, my level is {Level}.");
     }
 
+    public void Upgrade()
+    {
+        if (level < 10)
+        {
+            level++;
+        }
+    }
 }
