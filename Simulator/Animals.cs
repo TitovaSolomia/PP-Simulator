@@ -15,29 +15,18 @@ namespace Simulator;
     public string Description
     {
         get => description;
-        init
-        {
-            var checked_descrip = value.Trim();
-
-            if (checked_descrip.Length > 15)
-            {
-                checked_descrip = checked_descrip.Substring(0, 15).TrimEnd();
-            }
-
-            if (checked_descrip.Length < 3)
-            {
-                checked_descrip = checked_descrip.PadRight(3, '#');
-            }
-
-            if (char.IsLower(checked_descrip[0]))
-            {
-                checked_descrip = char.ToUpper(checked_descrip[0]) + checked_descrip.Substring(1);
-            }
-
-            description = checked_descrip;
-        }
+        init => description=Validator.Shortener(value, 3, 10, '#');
     }
-    public uint Size { get; set; } = 3;                
-    public string Info => $"{Description} <{Size}>";
+    public uint Size { get; set; } = 3;
+
+    public override string ToString()
+    {
+        var className = this.GetType().Name;
+        return $"{className.ToUpper()}: {this.Info}";
+    }
+    public virtual string Info 
+    { 
+        get { return $"{Description} <{Size}>"; }
+    }
     
 }

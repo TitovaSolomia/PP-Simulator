@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Simulator;
 
-internal class Creature
+public abstract class Creature
 {
     private string name = "Unknown";
     private int level = 1;
@@ -14,47 +14,31 @@ internal class Creature
     public string Name
     {
         get => name;
-        init
-        {
-            var checked_name = value.Trim();
-
-            if (checked_name.Length > 25)
-            {
-                checked_name = checked_name.Substring(0, 25).TrimEnd();
-            }
-
-            if (checked_name.Length < 3)
-            {
-                checked_name = checked_name.PadRight(3, '#');
-            }
-
-            if (char.IsLower(checked_name[0]))
-            {
-                checked_name = char.ToUpper(checked_name[0]) + checked_name.Substring(1);
-            }
-
-            name = checked_name;
-        }
+        init => name = Validator.Shortener(value, 3, 25, '#');
     }
 
     public int Level
     {
         get => level;
-        init => level = value < 1 ? 1 : value > 10 ? 10 : value;
+        init => level = Validator.Limiter(value, 0, 10);
     }
 
+    public Creature() { }
     public Creature(string name, int level = 1)
     {
         Name = name;
         Level = level;
     }
 
-    public string Info => $"{Name} [{Level}]";
-
-    public void SayHi()
+    public override string ToString()
     {
-        Console.WriteLine($"My name is {Name}, my level is {Level}.");
+        var className = this.GetType().Name;
+        return $"{className.ToUpper()}: {this.Info}";
     }
+    public abstract string Info { get; }
+
+    public abstract void SayHi();
+    public abstract int Power { get; }
 
     public void Upgrade()
     {
