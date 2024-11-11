@@ -1,11 +1,12 @@
-﻿using System.Reflection.Emit;
+﻿using Simulator.Maps;
+using System.Reflection.Emit;
 using System.Xml.Linq;
 
 namespace Simulator;
 
 internal class Program
 {
-    static void Lab5()
+    static void Lab5a()
     {
         try
         {
@@ -47,9 +48,37 @@ internal class Program
 
     }
 
+    static void Lab5b()
+    {
+        SmallSquareMap squareMap = new SmallSquareMap(10);
+
+        Point currentPos = new Point(0, 0);
+        Console.WriteLine(currentPos);
+
+        currentPos = squareMap.Next(currentPos, Direction.Up);
+        currentPos = squareMap.NextDiagonal(currentPos, Direction.Up);
+
+        Console.WriteLine(currentPos);
+
+        for (int i = 0; i < 10; i++)
+        {
+            currentPos = squareMap.NextDiagonal(currentPos, Direction.Up);
+            Console.WriteLine(currentPos);
+        }
+
+        try
+        {
+            SmallSquareMap squareMap1 = new SmallSquareMap(2);
+        }
+        catch (ArgumentOutOfRangeException e)
+        {
+            Console.WriteLine(e.Message);
+        }
+    }
     static void Main(string[] args)
     {
-        Lab5();
+        Lab5a();
+        Lab5b();
     }
 
 }
