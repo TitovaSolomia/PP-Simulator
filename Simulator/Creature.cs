@@ -53,16 +53,13 @@ public abstract class Creature
 
     public string[] Go(Direction[] directions)
     {
-        foreach (Direction direction in directions)
-        {
             var result = new string[directions.Length];
             for (int i = 0; i < directions.Length; i++)
             {
                 result[i] = Go(directions[i]);
             }
 
-            return result;
-        }
+            return result;     
     }
 
     public string[] Go(string directionSeq) =>
