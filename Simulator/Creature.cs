@@ -37,7 +37,7 @@ public abstract class Creature
     }
     public abstract string Info { get; }
 
-    public abstract void SayHi();
+    public abstract string Greeting();
     public abstract int Power { get; }
 
     public void Upgrade()
@@ -48,23 +48,24 @@ public abstract class Creature
         }
     }
 
-    public void Go(Direction direction)
-    {
-        string str = direction.ToString().ToLower();
-        Console.WriteLine($"{Name} goes {str}.");
-    }
+    public string Go(Direction direction) => direction.ToString().ToLower();
+        
 
-    public void Go(Direction[] directions)
+    public string[] Go(Direction[] directions)
     {
         foreach (Direction direction in directions)
         {
-            Go(direction);
+            var result = new string[directions.Length];
+            for (int i = 0; i < directions.Length; i++)
+            {
+                result[i] = Go(directions[i]);
+            }
+
+            return result;
         }
     }
 
-    public void Go(string input)
-    {
-        Direction[] directions = DirectionParser.Parse(input);
-        Go(directions); 
-    }
+    public string[] Go(string directionSeq) =>
+        Go(DirectionParser.Parse(directionSeq));
+         
 }

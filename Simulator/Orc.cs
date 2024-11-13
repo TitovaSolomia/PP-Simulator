@@ -24,8 +24,6 @@ public class Orc : Creature
     }
     public void Hunt() {
 
-        Console.WriteLine($"{Name} is hunting.");
-
         huntCounter++;
 
         if (huntCounter == 3)
@@ -33,11 +31,6 @@ public class Orc : Creature
             if (rage < 10)
             {
                 rage++;
-                Console.WriteLine($"{Name}'s agility increased to {Rage}!");
-            }
-            else
-            {
-                Console.WriteLine($"{Name} has reached maximum agility.");
             }
 
             huntCounter = 0;
@@ -51,10 +44,7 @@ public class Orc : Creature
         get { return $"{Name} [{Level}][{Rage}]"; } 
     }
 
-    public override void SayHi() => Console.WriteLine(
-    $"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}."
-    );
-
-
+    public override string Greeting() => 
+    $"Hi, I'm {Name}, my level is {Level}, my rage is {Rage}.";
 
 }
