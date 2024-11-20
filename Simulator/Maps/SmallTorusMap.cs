@@ -9,18 +9,9 @@ namespace Simulator.Maps;
 public class SmallTorusMap : Map
 {
     public int Size { get; }
-    public SmallTorusMap(int size)
+    public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY)
     {
-        if (size < 5 || size > 20)
-        {
-            throw new ArgumentOutOfRangeException(nameof(size), "Size must be between 5 and 20.");
-        }
-        Size = size;
-    }
-
-    public override bool Exist(Point p)
-    {
-        return p.X >= 0 && p.X < Size && p.Y >= 0 && p.Y < Size;
+  
     }
 
 
@@ -50,8 +41,8 @@ public class SmallTorusMap : Map
 
     private Point Wrap(Point p)
     {
-        int wrappedX = (p.X % Size + Size) % Size;
-        int wrappedY = (p.Y % Size + Size) % Size;
+        int wrappedX = (p.X % SizeX + SizeY) % SizeX;
+        int wrappedY = (p.Y % SizeX + SizeY) % SizeY;
         return new Point(wrappedX, wrappedY);
     }
 
