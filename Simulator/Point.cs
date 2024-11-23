@@ -22,7 +22,6 @@ public readonly struct Point
             Direction.Right => new Point(X + 1, Y),
             _ => this
         };
-        return default;
     }
 
     public Point NextDiagonal(Direction direction)
@@ -35,6 +34,29 @@ public readonly struct Point
             Direction.Right => new Point(X + 1, Y - 1),
             _ => this
         };
-        return default;
+    }
+
+    public static bool operator ==(Point p1, Point p2)
+    {
+        return p1.X == p2.X && p1.Y == p2.Y;
+    }
+
+    public static bool operator !=(Point p1, Point p2)
+    {
+        return !(p1 == p2);
+    }
+
+    public override bool Equals(object obj)
+    {
+        if (obj is Point other)
+        {
+            return X == other.X && Y == other.Y;
+        }
+        return false;
+    }
+
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(X, Y);
     }
 }

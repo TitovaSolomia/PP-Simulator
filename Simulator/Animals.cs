@@ -15,7 +15,7 @@ namespace Simulator;
     public string Description
     {
         get => description;
-        init => description=Validator.Shortener(value, 3, 10, '#');
+        init => description=Validator.Shortener(value);
     }
     public uint Size { get; set; } = 3;
 

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simulator.Maps;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,13 +9,26 @@ namespace Simulator;
 
 public abstract class Creature
 {
+    public Map? Map { get; private set; }
+    public Point Position { get; private set; }
+
+    public void InitMapAndPosition(Map map, Point position) { 
+        if (this.Map == null)
+        {
+            this.Map = map;
+            this.Position = position;
+            map.Add(this, position);
+        }
+    
+    }
+
     private string name = "Unknown";
     private int level = 1;
 
     public string Name
     {
         get => name;
-        init => name = Validator.Shortener(value, 3, 25, '#');
+        init => name = Validator.Shortener(value);
     }
 
     public int Level
@@ -47,22 +61,10 @@ public abstract class Creature
             level++;
         }
     }
-
-    public string Go(Direction direction) => direction.ToString().ToLower();
-        
-
-    public string[] Go(Direction[] directions)
+    public void Go(Direction direction)
     {
-            var result = new string[directions.Length];
-            for (int i = 0; i < directions.Length; i++)
-            {
-                result[i] = Go(directions[i]);
-            }
-
-            return result;     
+        Point newPoint = this.Map.Next(this.Position, direction);
+        this.Map.Move(this, newPoint);
+        this.Position = newPoint;
     }
-
-    public string[] Go(string directionSeq) =>
-        Go(DirectionParser.Parse(directionSeq));
-         
 }

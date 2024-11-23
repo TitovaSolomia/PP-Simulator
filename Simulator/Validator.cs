@@ -24,7 +24,7 @@ public class Validator
         return value;
     }
 
-    public static string Shortener(string value, int min, int max, char placeholder)
+    public static string Shortener(string value)
     {
         value = value.Trim();
 

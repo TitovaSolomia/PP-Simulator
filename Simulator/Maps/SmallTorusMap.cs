@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace Simulator.Maps;
 
-public class SmallTorusMap : Map
+public class SmallTorusMap : SmallMap
 {
     public int Size { get; }
-    public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY)
-    {
-  
-    }
-
+    public SmallTorusMap(int sizeX, int sizeY) : base(sizeX, sizeY) { }
 
     public override Point Next(Point p, Direction d)
     {
@@ -41,8 +37,8 @@ public class SmallTorusMap : Map
 
     private Point Wrap(Point p)
     {
-        int wrappedX = (p.X % SizeX + SizeY) % SizeX;
-        int wrappedY = (p.Y % SizeX + SizeY) % SizeY;
+        int wrappedX = (p.X % SizeX + SizeX) % SizeX;
+        int wrappedY = (p.Y % SizeY + SizeY) % SizeY;
         return new Point(wrappedX, wrappedY);
     }
 

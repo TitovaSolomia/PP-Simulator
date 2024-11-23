@@ -23,14 +23,14 @@ public class ValidatorTests
     }
 
     [Theory]
-    [InlineData("hello", 3, 10, '-', "Hello")]
-    [InlineData("    multiple   spaces  ", 5, 20, '*', "Multiple   spaces")]
-    [InlineData("short", 10, 15, '*', "Short*****")]
-    [InlineData("TooLongOfAString", 5, 10, '-', "TooLongOfA")]
-    [InlineData(" spaces ", 2, 8, '#', "Spaces")]
-    public void Shortener_ValidString_ReturnsFormattedString(string value, int min, int max, char placeholder, string expected)
+    [InlineData("hello", "Hello")]
+    [InlineData("    multiple   spaces  ", "Multiple   spaces")]
+    [InlineData("s", "S##")]
+    [InlineData("TooLongOfAString12345622221", "TooLongOfAString1234562222")]
+    [InlineData(" spaces ", "Spaces")]
+    public void Shortener_ValidString_ReturnsFormattedString(string value, string expected)
     {
-        var result = Validator.Shortener(value, min, max, placeholder);
+        var result = Validator.Shortener(value);
 
         Assert.Equal(expected, result);
     }
@@ -38,17 +38,17 @@ public class ValidatorTests
     [Fact]
     public void Shortener_EmptyString_PopulatesWithPlaceholder()
     {
-        var result = Validator.Shortener("", 5, 10, '-');
+        var result = Validator.Shortener("");
 
-        Assert.Equal("-----", result);
+        Assert.Equal("###", result);
     }
 
     [Theory]
-    [InlineData("single", 6, 6, '*', "Single")]
-    [InlineData("short", 5, 5, '-', "Short")]
-    public void Shortener_MinEqualsMax_ReturnsClampedString(string value, int min, int max, char placeholder, string expected)
+    [InlineData("single", "Single")]
+    [InlineData("short", "Short")]
+    public void Shortener_MinEqualsMax_ReturnsClampedString(string value, string expected)
     {
-        var result = Validator.Shortener(value, min, max, placeholder);
+        var result = Validator.Shortener(value);
 
         Assert.Equal(expected, result);
     }

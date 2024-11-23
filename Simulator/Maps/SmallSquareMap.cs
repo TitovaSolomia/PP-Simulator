@@ -8,10 +8,13 @@ namespace Simulator.Maps;
 
 public class SmallSquareMap : SmallMap
 {
-    public SmallSquareMap(int sizeX, int sizeY) : base(sizeX, sizeY) {
-    
+    public SmallSquareMap(int sizeX, int sizeY) : base(sizeX, sizeY) 
+    {
+        if (sizeX != sizeY)
+        {
+            throw new ArgumentException("Mapa powinna być kwadratowa");
+        }
     }
-
     public override Point Next(Point p, Direction d)
     {
         if (Exist(p.Next(d)))
