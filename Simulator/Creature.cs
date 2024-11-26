@@ -64,7 +64,7 @@ public abstract class Creature
     public void Go(Direction direction)
     {
         Point newPoint = this.Map.Next(this.Position, direction);
-        this.Map.Move(this, newPoint);
+        this.Map.Move(this, this.Position, newPoint);
         this.Position = newPoint;
     }
 }

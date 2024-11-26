@@ -12,7 +12,7 @@ namespace Simulator;
 public class Elf : Creature
 {
     public Elf() { }
-    public Elf(string name, int level, int agility=1) : base(name, level) 
+    public Elf(string name, int level = 0, int agility=1) : base(name, level) 
     { 
         Agility = agility;
     }

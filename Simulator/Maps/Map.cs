@@ -15,7 +15,7 @@ public abstract class Map
 
     public abstract List<Creature> At(int x, int y);
     public abstract void Remove(Creature creature, Point point); 
-    public abstract void Move(Creature creature, Point point);
+    public abstract void Move(Creature creature, Point pointFrom, Point pointTo);
 
     private readonly Rectangle _map;
     public int SizeX { get; }
@@ -24,19 +24,19 @@ public abstract class Map
     protected Map(int sizeX, int sizeY) 
     {
         
-        if (SizeX < 5)
+        if (sizeX < 5)
         {
             throw new ArgumentOutOfRangeException(nameof(sizeX), "Too narrow");
         }
 
 
-        if (SizeY < 5)
+        if (sizeY < 5)
         {
             throw new ArgumentOutOfRangeException(nameof(sizeY), "Too short");
         }
 
-        sizeX = SizeX;
-        sizeY = SizeY;
+        SizeX = sizeX;
+        SizeY = sizeY;
         _map = new Rectangle(0, 0, SizeX - 1, SizeY - 1);
     }
 

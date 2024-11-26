@@ -103,7 +103,7 @@ public class Simulation
         IndexOfAction = (IndexOfAction + 1) % Creatures.Count;
         IndexOfMove++;
 
-        if (IndexOfMove >= Positions.Count()) 
+        if (IndexOfMove >= Moves.Count()) 
         { 
             Finished = true;
         }

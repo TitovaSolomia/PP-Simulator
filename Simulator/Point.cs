@@ -54,7 +54,6 @@ public readonly struct Point
         }
         return false;
     }
-
     public override int GetHashCode()
     {
         return HashCode.Combine(X, Y);

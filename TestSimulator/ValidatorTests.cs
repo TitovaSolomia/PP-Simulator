@@ -26,7 +26,7 @@ public class ValidatorTests
     [InlineData("hello", "Hello")]
     [InlineData("    multiple   spaces  ", "Multiple   spaces")]
     [InlineData("s", "S##")]
-    [InlineData("TooLongOfAString12345622221", "TooLongOfAString1234562222")]
+    [InlineData("TooLongOfAString12345622221", "TooLongOfAString123456222")]
     [InlineData(" spaces ", "Spaces")]
     public void Shortener_ValidString_ReturnsFormattedString(string value, string expected)
     {

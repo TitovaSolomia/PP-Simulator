@@ -29,16 +29,16 @@ public abstract class SmallMap : Map
     public override void Add(Creature creature, Point point)
     {
         if (!Exist(point)) return;
-        
-        List<Creature> creaturesOfPoint = _fields[point];
+      
 
-        if (creaturesOfPoint == null)
+        if (!_fields.ContainsKey(point))
         {
-            creaturesOfPoint = new List<Creature> { creature };
+            List<Creature> creaturesOfPoint = new List<Creature> { creature };
             _fields[point] = creaturesOfPoint;
         }
         else
         {
+            List<Creature> creaturesOfPoint = _fields[point];
             creaturesOfPoint.Add(creature);
         }
 
@@ -47,6 +47,8 @@ public abstract class SmallMap : Map
     public override void Remove(Creature creature, Point point)
     {
         if (!Exist(point)) return;
+
+        if (!_fields.ContainsKey(point)) return;
 
         List<Creature> creatures = _fields[point];
 
@@ -60,12 +62,12 @@ public abstract class SmallMap : Map
         }
     }
 
-    public override void Move(Creature creature, Point point)
+    public override void Move(Creature creature, Point pointFrom, Point pointTo)
     {
-        if (!Exist(point)) return; 
+        if (!Exist(pointTo)) return; 
 
-        Remove(creature, point);
-        Add(creature, point);
+        Remove(creature, pointFrom);
+        Add(creature, pointTo);
     }
 
     public override List<Creature> At(Point point)

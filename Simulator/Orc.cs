@@ -12,7 +12,7 @@ public class Orc : Creature
 
     private int huntCounter = 0;
     public Orc() { }
-    public Orc(string name, int level, int rage = 1) : base(name, level) 
+    public Orc(string name, int level = 0, int rage = 1) : base(name, level) 
     {
         Rage = rage;
     }
