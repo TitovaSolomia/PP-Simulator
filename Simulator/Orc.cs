@@ -11,6 +11,11 @@ public class Orc : Creature
     private int rage = 1;
 
     private int huntCounter = 0;
+
+    public override char Symbol
+    {
+        get { return 'O'; }
+    }
     public Orc() { }
     public Orc(string name, int level = 0, int rage = 1) : base(name, level) 
     {

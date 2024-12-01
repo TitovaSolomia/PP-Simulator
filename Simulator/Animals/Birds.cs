@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Simulator;
+namespace Simulator.Animals;
 
-public class Birds : Animals
+public abstract class Birds : Animals
 {
-    public bool CanFly { get; set; } = true; 
+    public bool CanFly { get; set; } = true;
     public override string Info
     {
         get { return $"{Description} (fly{(CanFly ? '+' : '-')}) <{Size}>"; }

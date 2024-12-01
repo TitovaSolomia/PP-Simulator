@@ -10,6 +10,9 @@ public interface IMappable
     Map? Map { get; }
 
     Point Position { get; }
+
+    abstract char Symbol { get; }
+
     public void Go(Direction currentMove);
     public void InitMapAndPosition(Map map, Point point);
 }

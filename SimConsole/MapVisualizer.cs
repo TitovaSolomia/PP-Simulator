@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Simulator.Maps;
 using Simulator;
+using Simulator.Animals;
 
 namespace SimConsole;
 
@@ -16,26 +17,13 @@ public class MapVisualizer
         Map = map;
     }
 
-    private char GetCreatureLetter(Creature creature)
-    {
-        switch (creature)
-        {
-            case Orc o:
-                return 'O';
-            case Elf e:
-                return 'E';
-            default:
-                return ' ';
-        }
-    }
-
     private char GetPointChar(int x, int y) 
     {
         List<IMappable> mappables = Map.At(x, y);
 
         if (mappables == null || mappables.Count() == 0) return ' ';
         else if (mappables.Count() >= 2) return 'X';
-        else return GetCreatureLetter((Creature)mappables[0]);
+        else return mappables[0].Symbol;
     }
 
     public void Draw()

@@ -1,6 +1,7 @@
 ﻿using Simulator.Maps;
 using Simulator;
 using System.Text;
+using Simulator.Animals;
 
 namespace SimConsole;
 
@@ -11,14 +12,15 @@ internal class Program
     {
         Console.OutputEncoding = Encoding.UTF8;
 
-        SmallSquareMap mapSquare = new(5);
-        SmallTorusMap mapTorus = new(6, 5);
-        List<IMappable> creatures = [new Orc("Gorbag"), new Elf("Elandor")];
-        List<Point> points = [new(2, 2), new(3,1)];
-        string moves = "dluld";
+        SmallTorusMap map = new SmallTorusMap(8, 6);
 
-        Simulation simulation = new(mapTorus, creatures, points, moves);
-        MapVisualizer mapVisualizer = new(mapTorus);
+        List<IMappable> mappables = [new Orc("Gorbag"), new Elf("Elandor"), new Ostrich(), new Rabbit(), new Eagle()];
+        List<Point> points = [new(2, 2), new(3, 1), new(1, 3), new(1, 3), new(5, 1)];
+
+        string moves = "ruuldrrluddlruu";
+
+        Simulation simulation = new(map, mappables, points, moves);
+        MapVisualizer mapVisualizer = new(simulation.Map);
 
         Play(mapVisualizer, simulation);
     }
@@ -42,8 +44,8 @@ internal class Program
 
     public static void ShowTurnInfo(Simulation simulation)
     {
-        Creature mappable = (Creature)simulation.CurrentMappable;
-        Console.Write(mappable.GetType().Name + ": " + mappable.Name + " [" + mappable.Level + "] [" + GetPower(mappable) + "] " + mappable.Position + " ") ;
+        IMappable mappable = simulation.CurrentMappable;
+        Console.Write(mappable.GetType().Name + ": " + mappable.Position + " ") ;
         Console.WriteLine("go " + simulation.CurrentMove.ToString());
 
     }

@@ -11,7 +11,13 @@ namespace Simulator;
 
 public class Elf : Creature
 {
+    public override char Symbol
+    {
+        get { return 'E'; }
+    }
+
     public Elf() { }
+
     public Elf(string name, int level = 0, int agility=1) : base(name, level) 
     { 
         Agility = agility;

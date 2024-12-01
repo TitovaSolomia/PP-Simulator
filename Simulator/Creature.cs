@@ -11,6 +11,8 @@ public abstract class Creature : IMappable
 {
     public Map? Map { get; private set; }
     public Point Position { get; private set; }
+    public abstract char Symbol { get; }
+
 
     public void InitMapAndPosition(Map map, Point position) { 
         if (this.Map == null)

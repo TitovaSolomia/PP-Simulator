@@ -7,44 +7,47 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Simulator;
+namespace Simulator.Animals;
 
 public abstract class Animals : IMappable
 {
     private string description = "Unknown";
-    public Map? Map { get; private set; }
-    public Point Position { get; private set; }
+    public Map? Map { get; protected set; }
+    public Point Position { get; protected set; }
+
+    public virtual char Symbol
+    {
+        get { return 'A'; }
+    }
 
     public string Description
     {
         get => description;
-        init => description=Validator.Shortener(value);
+        init => description = Validator.Shortener(value);
     }
     public uint Size { get; set; } = 3;
 
     public override string ToString()
     {
-        var className = this.GetType().Name;
-        return $"{className.ToUpper()}: {this.Info}";
+        var className = GetType().Name;
+        return $"{className.ToUpper()}: {Info}";
     }
 
     public void InitMapAndPosition(Map map, Point point)
     {
-        if (this.Map == null)
+        if (Map == null)
         {
-            this.Map = map;
-            this.Position = point;
+            Map = map;
+            Position = point;
             map.Add(this, point);
         }
     }
 
-    public void Go(Direction currentMove)
-    {
-        throw new NotImplementedException();
-    }
+    public abstract void Go(Direction currentMove);
 
-    public virtual string Info 
-    { 
+
+    public virtual string Info
+    {
         get { return $"{Description} <{Size}>"; }
     }
 }
