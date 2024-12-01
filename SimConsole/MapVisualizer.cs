@@ -31,11 +31,11 @@ public class MapVisualizer
 
     private char GetPointChar(int x, int y) 
     {
-        List<Creature> creatures = Map.At(x, y);
+        List<IMappable> mappables = Map.At(x, y);
 
-        if (creatures == null || creatures.Count() == 0) return ' ';
-        else if (creatures.Count() >= 2) return 'X';
-        else return GetCreatureLetter(creatures[0]);
+        if (mappables == null || mappables.Count() == 0) return ' ';
+        else if (mappables.Count() >= 2) return 'X';
+        else return GetCreatureLetter((Creature)mappables[0]);
     }
 
     public void Draw()

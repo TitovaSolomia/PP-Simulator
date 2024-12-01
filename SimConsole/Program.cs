@@ -13,7 +13,7 @@ internal class Program
 
         SmallSquareMap mapSquare = new(5);
         SmallTorusMap mapTorus = new(6, 5);
-        List<Creature> creatures = [new Orc("Gorbag"), new Elf("Elandor")];
+        List<IMappable> creatures = [new Orc("Gorbag"), new Elf("Elandor")];
         List<Point> points = [new(2, 2), new(3,1)];
         string moves = "dluld";
 
@@ -42,15 +42,15 @@ internal class Program
 
     public static void ShowTurnInfo(Simulation simulation)
     {
-        Creature creature = simulation.CurrentCreature;
-        Console.Write(creature.GetType().Name + ": " + creature.Name + " [" + creature.Level + "] [" + GetPower(creature) + "] " + creature.Position + " ") ;
+        Creature mappable = (Creature)simulation.CurrentMappable;
+        Console.Write(mappable.GetType().Name + ": " + mappable.Name + " [" + mappable.Level + "] [" + GetPower(mappable) + "] " + mappable.Position + " ") ;
         Console.WriteLine("go " + simulation.CurrentMove.ToString());
 
     }
 
-    public static string GetPower(Creature creature)
+    public static string GetPower(Creature mappable)
     {
-        switch (creature)
+        switch (mappable)
         {
             case Orc o:
                 return o.Rage.ToString();

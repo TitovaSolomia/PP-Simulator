@@ -10,12 +10,12 @@ namespace Simulator.Maps;
 /// </summary>
 public abstract class Map
 {
-    public abstract void Add(Creature creature, Point point);
-    public abstract List<Creature> At(Point point);
+    public abstract void Add(IMappable mappable, Point point);
+    public abstract List<IMappable> At(Point point);
 
-    public abstract List<Creature> At(int x, int y);
-    public abstract void Remove(Creature creature, Point point); 
-    public abstract void Move(Creature creature, Point pointFrom, Point pointTo);
+    public abstract List<IMappable> At(int x, int y);
+    public abstract void Remove(IMappable mappable, Point point); 
+    public abstract void Move(IMappable mappable, Point pointFrom, Point pointTo);
 
     private readonly Rectangle _map;
     public int SizeX { get; }

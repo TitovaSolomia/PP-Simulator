@@ -8,7 +8,7 @@ namespace Simulator.Maps;
 
 public abstract class SmallMap : Map
 {
-    Dictionary<Point, List<Creature>> _fields; 
+    Dictionary<Point, List<IMappable>> _fields; 
 
 
     public SmallMap(int sizeX, int sizeY) : base(sizeX, sizeY) 
@@ -23,54 +23,54 @@ public abstract class SmallMap : Map
             throw new ArgumentOutOfRangeException(nameof(sizeY), "Too high");
         }
 
-        _fields = new Dictionary<Point, List<Creature>>();
+        _fields = new Dictionary<Point, List<IMappable>>();
     }
 
-    public override void Add(Creature creature, Point point)
+    public override void Add(IMappable mappable, Point point)
     {
         if (!Exist(point)) return;
       
 
         if (!_fields.ContainsKey(point))
         {
-            List<Creature> creaturesOfPoint = new List<Creature> { creature };
+            List<IMappable> creaturesOfPoint = new List<IMappable> {mappable};
             _fields[point] = creaturesOfPoint;
         }
         else
         {
-            List<Creature> creaturesOfPoint = _fields[point];
-            creaturesOfPoint.Add(creature);
+            List<IMappable> creaturesOfPoint = _fields[point];
+            creaturesOfPoint.Add(mappable);
         }
 
     }
 
-    public override void Remove(Creature creature, Point point)
+    public override void Remove(IMappable mappable, Point point)
     {
         if (!Exist(point)) return;
 
         if (!_fields.ContainsKey(point)) return;
 
-        List<Creature> creatures = _fields[point];
+        List<IMappable> creatures = _fields[point];
 
-        if (creatures.Contains(creature))
+        if (creatures.Contains(mappable))
         {
-            creatures.Remove(creature);
+            creatures.Remove(mappable);
         }
         else
         {
-            Console.WriteLine("Nie ma stworu w tym punkcie");
+            Console.WriteLine("Nie ma objektu w tym punkcie");
         }
     }
 
-    public override void Move(Creature creature, Point pointFrom, Point pointTo)
+    public override void Move(IMappable mappable, Point pointFrom, Point pointTo)
     {
         if (!Exist(pointTo)) return; 
 
-        Remove(creature, pointFrom);
-        Add(creature, pointTo);
+        Remove(mappable, pointFrom);
+        Add(mappable, pointTo);
     }
 
-    public override List<Creature> At(Point point)
+    public override List<IMappable> At(Point point)
     {
 
         if (Exist(point) && _fields.ContainsKey(point))
@@ -83,7 +83,7 @@ public abstract class SmallMap : Map
         }
     }
 
-    public override List<Creature> At(int x, int y)
+    public override List<IMappable> At(int x, int y)
     {
         Point point = new Point(x, y);
         return At(point);

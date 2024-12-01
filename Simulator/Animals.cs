@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Simulator.Maps;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
@@ -8,9 +9,11 @@ using System.Xml.Linq;
 
 namespace Simulator;
 
- public class Animals
+public abstract class Animals : IMappable
 {
     private string description = "Unknown";
+    public Map? Map { get; private set; }
+    public Point Position { get; private set; }
 
     public string Description
     {
@@ -24,9 +27,24 @@ namespace Simulator;
         var className = this.GetType().Name;
         return $"{className.ToUpper()}: {this.Info}";
     }
+
+    public void InitMapAndPosition(Map map, Point point)
+    {
+        if (this.Map == null)
+        {
+            this.Map = map;
+            this.Position = point;
+            map.Add(this, point);
+        }
+    }
+
+    public void Go(Direction currentMove)
+    {
+        throw new NotImplementedException();
+    }
+
     public virtual string Info 
     { 
         get { return $"{Description} <{Size}>"; }
     }
-    
 }
