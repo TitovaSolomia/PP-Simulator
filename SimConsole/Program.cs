@@ -12,12 +12,12 @@ internal class Program
     {
         Console.OutputEncoding = Encoding.UTF8;
 
-        SmallTorusMap map = new SmallTorusMap(8, 6);
+        BigBounceMap map = new BigBounceMap(8, 6);
 
         List<IMappable> mappables = [new Orc("Gorbag"), new Elf("Elandor"), new Ostrich(), new Rabbit(), new Eagle()];
         List<Point> points = [new(2, 2), new(3, 1), new(1, 3), new(1, 3), new(5, 1)];
 
-        string moves = "ruuldrrluddlruu";
+        string moves = "llllllllll";
 
         Simulation simulation = new(map, mappables, points, moves);
         MapVisualizer mapVisualizer = new(simulation.Map);
