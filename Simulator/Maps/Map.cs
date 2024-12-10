@@ -16,7 +16,9 @@ public abstract class Map
     public abstract List<IMappable> At(int x, int y);
     public abstract void Remove(IMappable mappable, Point point); 
     public abstract void Move(IMappable mappable, Point pointFrom, Point pointTo);
+    public abstract Dictionary<Point, List<IMappable>> GetMapState();
 
+    public abstract void SetMapState(Dictionary<Point, List<IMappable>> mapState);
     private readonly Rectangle _map;
     public int SizeX { get; }
     public int SizeY { get; }
@@ -63,4 +65,5 @@ public abstract class Map
     /// <param name="d">Direction.</param>
     /// <returns>Next point.</returns>
     public abstract Point NextDiagonal(Point p, Direction d);
+
 }

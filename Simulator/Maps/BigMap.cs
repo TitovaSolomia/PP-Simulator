@@ -88,5 +88,12 @@ namespace Simulator.Maps
             Point point = new Point(x, y);
             return At(point);
         }
+
+        public override Dictionary<Point, List<IMappable>> GetMapState() { return _fields; }
+
+        public override void SetMapState(Dictionary<Point, List<IMappable>> mapState)
+        {
+            this._fields = mapState;
+        }
     }
 }
