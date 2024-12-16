@@ -8,9 +8,6 @@ namespace Simulator.Maps;
 
 public abstract class SmallMap : Map
 {
-    Dictionary<Point, List<IMappable>> _fields; 
-
-
     public SmallMap(int sizeX, int sizeY) : base(sizeX, sizeY) 
     {
         if (sizeX > 20)
@@ -22,77 +19,5 @@ public abstract class SmallMap : Map
         {
             throw new ArgumentOutOfRangeException(nameof(sizeY), "Too high");
         }
-
-        _fields = new Dictionary<Point, List<IMappable>>();
-    }
-
-    public override void Add(IMappable mappable, Point point)
-    {
-        if (!Exist(point)) return;
-      
-
-        if (!_fields.ContainsKey(point))
-        {
-            List<IMappable> creaturesOfPoint = new List<IMappable> {mappable};
-            _fields[point] = creaturesOfPoint;
-        }
-        else
-        {
-            List<IMappable> creaturesOfPoint = _fields[point];
-            creaturesOfPoint.Add(mappable);
-        }
-
-    }
-
-    public override void Remove(IMappable mappable, Point point)
-    {
-        if (!Exist(point)) return;
-
-        if (!_fields.ContainsKey(point)) return;
-
-        List<IMappable> creatures = _fields[point];
-
-        if (creatures.Contains(mappable))
-        {
-            creatures.Remove(mappable);
-        }
-        else
-        {
-            Console.WriteLine("Nie ma objektu w tym punkcie");
-        }
-    }
-
-    public override void Move(IMappable mappable, Point pointFrom, Point pointTo)
-    {
-        if (!Exist(pointTo)) return; 
-
-        Remove(mappable, pointFrom);
-        Add(mappable, pointTo);
-    }
-
-    public override List<IMappable> At(Point point)
-    {
-
-        if (Exist(point) && _fields.ContainsKey(point))
-        {
-            return _fields[point];
-        }
-        else
-        {
-            return null;
-        }
-    }
-
-    public override List<IMappable> At(int x, int y)
-    {
-        Point point = new Point(x, y);
-        return At(point);
-    }
-
-    public override Dictionary<Point, List<IMappable>> GetMapState() { return _fields; }
-
-    public override void SetMapState(Dictionary<Point, List<IMappable>> mapState)
-    {
-        this._fields = mapState;
     }
 }

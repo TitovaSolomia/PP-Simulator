@@ -10,22 +10,15 @@ namespace Simulator.Maps;
 /// </summary>
 public abstract class Map
 {
-    public abstract void Add(IMappable mappable, Point point);
-    public abstract List<IMappable> At(Point point);
-
-    public abstract List<IMappable> At(int x, int y);
-    public abstract void Remove(IMappable mappable, Point point); 
-    public abstract void Move(IMappable mappable, Point pointFrom, Point pointTo);
-    public abstract Dictionary<Point, List<IMappable>> GetMapState();
-
-    public abstract void SetMapState(Dictionary<Point, List<IMappable>> mapState);
     private readonly Rectangle _map;
     public int SizeX { get; }
     public int SizeY { get; }
 
-    protected Map(int sizeX, int sizeY) 
+    Dictionary<Point, List<IMappable>> _fields;
+
+    protected Map(int sizeX, int sizeY)
     {
-        
+
         if (sizeX < 5)
         {
             throw new ArgumentOutOfRangeException(nameof(sizeX), "Too narrow");
@@ -40,6 +33,76 @@ public abstract class Map
         SizeX = sizeX;
         SizeY = sizeY;
         _map = new Rectangle(0, 0, SizeX - 1, SizeY - 1);
+        _fields = new Dictionary<Point, List<IMappable>>();
+    }
+    public void Add(IMappable mappable, Point point)
+    {
+        if (!Exist(point)) return;
+
+
+        if (!_fields.ContainsKey(point))
+        {
+            List<IMappable> creaturesOfPoint = new List<IMappable> { mappable };
+            _fields[point] = creaturesOfPoint;
+        }
+        else
+        {
+            List<IMappable> creaturesOfPoint = _fields[point];
+            creaturesOfPoint.Add(mappable);
+        }
+
+    }
+
+    public void Remove(IMappable mappable, Point point)
+    {
+        if (!Exist(point)) return;
+
+        if (!_fields.ContainsKey(point)) return;
+
+        List<IMappable> creatures = _fields[point];
+
+        if (creatures.Contains(mappable))
+        {
+            creatures.Remove(mappable);
+        }
+        else
+        {
+            Console.WriteLine("Nie ma objektu w tym punkcie");
+        }
+    }
+
+    public void Move(IMappable mappable, Point pointFrom, Point pointTo)
+    {
+        if (!Exist(pointTo)) return;
+
+        Remove(mappable, pointFrom);
+        Add(mappable, pointTo);
+    }
+
+    public List<IMappable> At(Point point)
+    {
+
+        if (Exist(point) && _fields.ContainsKey(point))
+        {
+            return _fields[point];
+        }
+        else
+        {
+            return null;
+        }
+    }
+
+    public List<IMappable> At(int x, int y)
+    {
+        Point point = new Point(x, y);
+        return At(point);
+    }
+
+    public Dictionary<Point, List<IMappable>> GetMapState() { return _fields; }
+
+    public void SetMapState(Dictionary<Point, List<IMappable>> mapState)
+    {
+        this._fields = mapState;
     }
 
     /// <summary>

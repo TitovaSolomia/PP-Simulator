@@ -15,4 +15,5 @@ public interface IMappable
 
     public void Go(Direction currentMove);
     public void InitMapAndPosition(Map map, Point point);
+    public string ToString();
 }
