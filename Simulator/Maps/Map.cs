@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -98,11 +99,33 @@ public abstract class Map
         return At(point);
     }
 
-    public Dictionary<Point, List<IMappable>> GetMapState() { return _fields; }
+    public Dictionary<Point, char> GetMapState() { 
+        
+        Dictionary<Point, char> mapState = new Dictionary<Point, char>();
+
+        for (int x = 0; x < this.SizeX; x++)
+        { 
+            for (int y = 0; y < this.SizeY; y++)
+            {
+                mapState.Add(new Point(x, y), this.GetPointChar(x, y));
+            }
+        }
+
+        return mapState;
+    }
 
     public void SetMapState(Dictionary<Point, List<IMappable>> mapState)
     {
         this._fields = mapState;
+    }
+
+    public char GetPointChar(int x, int y)
+    {
+        List<IMappable> mappables = this.At(x, y);
+
+        if (mappables == null || mappables.Count() == 0) return ' ';
+        else if (mappables.Count() >= 2) return 'X';
+        else return mappables[0].Symbol;
     }
 
     /// <summary>

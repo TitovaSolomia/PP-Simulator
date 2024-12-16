@@ -17,15 +17,6 @@ public class MapVisualizer
         Map = map;
     }
 
-    private char GetPointChar(int x, int y) 
-    {
-        List<IMappable> mappables = Map.At(x, y);
-
-        if (mappables == null || mappables.Count() == 0) return ' ';
-        else if (mappables.Count() >= 2) return 'X';
-        else return mappables[0].Symbol;
-    }
-
     public void Draw()
     {
         for (int row = Map.SizeY - 1; row >= 0; row--)
@@ -44,7 +35,7 @@ public class MapVisualizer
             for (int col = 0; col < Map.SizeX; col++)
             {
                 Console.Write(Box.Vertical);
-                Console.Write(GetPointChar(col, row));
+                Console.Write(Map.GetPointChar(col, row));
             }
             Console.WriteLine(Box.Vertical);
 
